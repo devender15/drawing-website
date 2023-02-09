@@ -129,7 +129,7 @@ pencilBtn.addEventListener("click", () => {
   colorBtn.appendChild(btnBg);
   buttonsContainer.replaceChild(colorBtn, pencilBtn);
 
-  // changing css for crayons
+  // changing css for pencils
   resetCSS("pencil");
 });
 
@@ -159,7 +159,7 @@ paintBtn.addEventListener("click", () => {
   colorBtn.appendChild(btnBg);
   buttonsContainer.replaceChild(colorBtn, paintBtn);
 
-  // changing css for crayons
+  // changing css for paint brush
   resetCSS("paint");
 });
 
