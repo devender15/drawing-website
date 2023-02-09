@@ -1,6 +1,8 @@
 let canvas = document.getElementById("canvas")
-canvas.height = window.innerHeight
-canvas.width = window.innerWidth
+let canvasContainer = document.getElementById("canvaContainer")
+
+canvas.height = 600
+canvas.width = 600
 let ctx = canvas.getContext("2d")
 ctx.lineWidth = 5
 
@@ -9,11 +11,14 @@ let prevY = null
 
 let draw = false
 
-let clrs = document.querySelectorAll(".clr")
+let clrs = document.querySelectorAll(".pencil-color")
 clrs = Array.from(clrs)
 clrs.forEach(clr => {
     clr.addEventListener("click", () => {
-        ctx.strokeStyle = clr.dataset.clr
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = clr.dataset.color
     })
 })
 

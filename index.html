@@ -10,26 +10,86 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
-    <div class="nav">
-        <!-- <div class="clr" data-clr="#000"></div>
-        <div class="clr" data-clr="#EF626C"></div>
-        <div class="clr" data-clr="#fdec03"></div>
-        <div class="clr" data-clr="#24d102"></div>
-        <div class="clr" data-clr="#fff"></div> -->
-        <img src="./assets/home.png" alt="home" class="home">
-        <img src="./assets/trash.png" alt="delete" class="clear">
-        <img src="./assets/save.png" alt="save" class="save">
-    </div>
 
-    <div class="toolbar">
-        <div class="clr" data-clr="#000"></div>
-        <div class="clr" data-clr="#EF626C"></div>
-        <div class="clr" data-clr="#fdec03"></div>
-        <div class="clr" data-clr="#24d102"></div>
-        <div class="clr" data-clr="#fff"></div>
-    </div>
+    <section class="main-container">
 
+        <div class="side-container">
+            <div id="canvasContainer">
+                <canvas id="canvas"></canvas>
+            </div>
+            <div class="nav">
+                <img src="./assets/home.png" alt="home" class="home" title="Home">
+                <img src="./assets/trash.png" alt="delete" class="clear" title="Delete">
+                <img src="./assets/save.png" alt="save" class="save" title="Save">
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <div class="colors">
+                <div class="pencils">
+                    <img src="./assets/pencils/pencil-rainbow.png" class="pencil-color" data-color="#ff0000"
+                        alt="rainbow">
+                    <img src="./assets/pencils/pencil-black.png" class="pencil-color" data-color="#111" alt="rainbow">
+                    <img src="./assets/pencils/pencil-brown.png" class="pencil-color" data-color="#964B00"
+                        alt="rainbow">
+                    <img src="./assets/pencils/pencil-blue.png" class="pencil-color" data-color="#0000FF" alt="rainbow">
+                    <img src="./assets/pencils/pencil-green.png" class="pencil-color" data-color="#00FF00"
+                        alt="rainbow">
+                    <img src="./assets/pencils/pencil-purple.png" class="pencil-color" data-color="#A020F0"
+                        alt="rainbow">
+                    <img src="./assets/pencils/pencil-purple2.png" class="pencil-color" data-color="#ad0097"
+                        alt="rainbow">
+                    <img src="./assets/pencils/pencil-pink.png" class="pencil-color" data-color="#db005a" alt="rainbow">
+                    <img src="./assets/pencils/pencil-red.png" class="pencil-color" data-color="#bd0317" alt="rainbow">
+                    <img src="./assets/pencils/pencil-orange.png" class="pencil-color" data-color="#e16b00"
+                        alt="rainbow">
+                    <img src="./assets/pencils/pencil-yellow.png" class="pencil-color" data-color="#e6cb02"
+                        alt="rainbow">
+                </div>
+
+                <div class="crayons">
+                    <img src="./assets/crayons/crayon-rainbow.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-black.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-brown.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-blue.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-green.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-purple.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-purple-2.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-pink.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-red.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-orange.png" alt="crayon">
+                    <img src="./assets/crayons/crayon-yellow.png" alt="crayon">
+                </div>
+
+                <div class="brush">
+                    <img src="./assets/brush/-rainbow.png" alt="brush">
+                    <img src="./assets/brush/-black.png" alt="brush">
+                    <img src="./assets/brush/-brown.png" alt="brush">
+                    <img src="./assets/brush/-blue.png" alt="brush">
+                    <img src="./assets/brush/green.png" alt="brush">
+                    <img src="./assets/brush/-purple.png" alt="brush">
+                    <img src="./assets/brush/-purple2.png" alt="brush">
+                    <img src="./assets/brush/-pink.png" alt="brush">
+                    <img src="./assets/brush/-red.png" alt="brush">
+                    <img src="./assets/brush/-orang.png" alt="brush">
+                    <img src="./assets/brush/yellow.png" alt="brush">
+                </div>
+
+            </div>
+            <div class="tools">
+                <div class="buttons">
+                    <div class="color-btn">
+                        <div class="btn-bg">
+                            <img src="./assets/tools/pencil.png" alt="pencil">
+                        </div>
+                    </div>
+                    <img src="./assets/tools/button-crayon.png" alt="crayon">
+                    <img src="./assets/tools/button-paint.png" alt="paint">
+                    <img src="./assets/tools/button-eraser.png" alt="eraser">
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="./app.js"></script>
 </body>
