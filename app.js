@@ -5,7 +5,7 @@ canvas.height = 700;
 canvas.width = 1200;
 
 let ctx = canvas.getContext("2d");
-ctx.lineWidth = 2;
+lineWidth = 2;
 
 // fill the bg white
 ctx.fillStyle = "white";
@@ -17,7 +17,7 @@ let prevY = null;
 let draw = false;
 
 let paint_erase = "paint";
-let strokeStyle = "#ff0000";
+let strokeStyle = "";
 
 let pencils = document.querySelectorAll(".pencil-color");
 let crayons = document.querySelectorAll(".crayon-color");
@@ -35,7 +35,7 @@ pencils.forEach((clr) => {
   clr.addEventListener("click", () => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.lineWidth = 2;
+    lineWidth = 2;
 
     // checking if the pencil selected is a rainbow pencil
     checkRainbow(clr);
@@ -55,8 +55,8 @@ pencils.forEach((clr) => {
 
 crayons.forEach((clr) => {
   clr.addEventListener("click", () => {
-    ctx.lineJoin = "round";
-    ctx.lineWidth = 5;
+    // ctx.lineJoin = "round";
+    lineWidth = 5;
 
     // checking if the crayon selected is a rainbow crayon
     checkRainbow(clr);
@@ -78,7 +78,7 @@ brushs.forEach((clr) => {
   clr.addEventListener("click", () => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.lineWidth = 25;
+    lineWidth = 25;
 
     // checking if the brush selected is a rainbow brush
     checkRainbow(clr);
@@ -95,6 +95,8 @@ brushs.forEach((clr) => {
     canvas.style.cursor = `url(./assets/brush/${clr.name}), auto`;
   });
 });
+
+// nav buttons
 
 let homeBtn = document.querySelector(".home");
 homeBtn.addEventListener("click", () => {
@@ -118,6 +120,12 @@ saveBtn.addEventListener("click", () => {
   a.click();
 });
 
+const slider = document.querySelector("#slide");
+slider.addEventListener("input", () => {
+  console.log("slider value: ", slider.value);
+  lineWidth = slider.value;
+});
+
 window.addEventListener("mousedown", (e) => (draw = true));
 window.addEventListener("mouseup", (e) => (draw = false));
 
@@ -136,7 +144,7 @@ window.addEventListener("mousemove", function (e) {
   } else {
     ctx.strokeStyle = strokeStyle;
   }
-
+  ctx.lineWidth = lineWidth;
   ctx.beginPath();
   ctx.moveTo(prevX, prevY);
   ctx.lineTo(mouseX, mouseY);
@@ -234,6 +242,8 @@ eraserBtn.addEventListener("click", () => {
     canvas.style.cursor = "default";
   }
 });
+
+// functions
 
 function resetCSS(name) {
   // showing crayons and hiding other tools

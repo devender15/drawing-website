@@ -31,6 +31,8 @@ body {
 }
 
 .nav {
+  display: flex;
+  align-items: center;
   width: fit-content;
   height: 50px;
   margin: 6rem 2rem;
@@ -39,10 +41,36 @@ body {
   left: 0;
   opacity: 0.3;
   transition: opacity 0.3s ease-in;
+  /* outline: 2px solid black; */
+  background-color: white;
 }
 
 .nav:hover {
   opacity: 1;
+}
+
+.nav #slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2rem;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.nav #slider label {
+  font-size: 1.5rem;
+  font-family: sans-serif;
+  font-weight: 600;
+  color: #111;
+  padding: 4rem 3rem;
+  cursor: pointer;
+}
+
+.nav #slider input {
+  cursor: pointer;
+  margin-left: 0.6rem;
 }
 
 .nav img {
