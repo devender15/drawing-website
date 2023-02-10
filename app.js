@@ -123,6 +123,10 @@ window.onload = () => {
 pencilBtn.addEventListener("click", () => {
   pencilBtn.classList.toggle("color-btn");
 
+  // removing selection from other buttons
+  crayonBtn.classList.remove("color-btn");
+  paintBtn.classList.remove("color-btn");
+
   // changing css for pencils
   resetCSS("pencil");
 });
@@ -130,12 +134,20 @@ pencilBtn.addEventListener("click", () => {
 crayonBtn.addEventListener("click", () => {
   crayonBtn.classList.toggle("color-btn");
 
+  // removing selection from other buttons
+  pencilBtn.classList.remove("color-btn");
+  paintBtn.classList.remove("color-btn");
+
   // changing css for crayons
   resetCSS("crayon");
 });
 
 paintBtn.addEventListener("click", () => {
   paintBtn.classList.toggle("color-btn");
+
+  // removing selection from other buttons
+  pencilBtn.classList.remove("color-btn");
+  crayonBtn.classList.remove("color-btn");
 
   // changing css for paint brush
   resetCSS("paint");
