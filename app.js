@@ -1,11 +1,14 @@
 let canvas = document.getElementById("canvas");
 let canvasContainer = document.getElementById("canvasContainer");
+const slider = document.querySelector("#slide");
 
 canvas.height = 700;
 canvas.width = 1200;
 
+let toolName = "pencil";
+
 let ctx = canvas.getContext("2d");
-lineWidth = 2;
+lineWidth = slider.value;
 
 // fill the bg white
 ctx.fillStyle = "white";
@@ -14,10 +17,12 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 let prevX = null;
 let prevY = null;
 
+// drawing state
+let latestPoint;
 let draw = false;
 
 let paint_erase = "paint";
-let strokeStyle = "";
+let strokeStyle = ""; // this will store the color
 
 let pencils = document.querySelectorAll(".pencil-color");
 let crayons = document.querySelectorAll(".crayon-color");
@@ -27,15 +32,19 @@ pencils = Array.from(pencils);
 crayons = Array.from(crayons);
 brushs = Array.from(brushs);
 
+let currentBrush = makeBrush(lineWidth);
+
 // this will store the selected tool and whenever we select other tool then this tool will move to its original place
 let selected = [];
 let brushSelected = [];
 
+
+// handling click on the tool color button
 pencils.forEach((clr) => {
   clr.addEventListener("click", () => {
+    toolName = "pencil";
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    lineWidth = 2;
 
     // checking if the pencil selected is a rainbow pencil
     checkRainbow(clr);
@@ -55,8 +64,8 @@ pencils.forEach((clr) => {
 
 crayons.forEach((clr) => {
   clr.addEventListener("click", () => {
-    // ctx.lineJoin = "round";
-    lineWidth = 5;
+    toolName = "crayon";
+    ctx.lineJoin = "round";
 
     // checking if the crayon selected is a rainbow crayon
     checkRainbow(clr);
@@ -76,9 +85,10 @@ crayons.forEach((clr) => {
 
 brushs.forEach((clr) => {
   clr.addEventListener("click", () => {
+    toolName = "brush";
+
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    lineWidth = 25;
 
     // checking if the brush selected is a rainbow brush
     checkRainbow(clr);
@@ -96,8 +106,8 @@ brushs.forEach((clr) => {
   });
 });
 
-// nav buttons
 
+// nav buttons
 let homeBtn = document.querySelector(".home");
 homeBtn.addEventListener("click", () => {
   window.location.reload();
@@ -120,16 +130,21 @@ saveBtn.addEventListener("click", () => {
   a.click();
 });
 
-const slider = document.querySelector("#slide");
 slider.addEventListener("input", () => {
-  console.log("slider value: ", slider.value);
   lineWidth = slider.value;
 });
 
-window.addEventListener("mousedown", (e) => (draw = true));
-window.addEventListener("mouseup", (e) => (draw = false));
 
-window.addEventListener("mousemove", function (e) {
+// main drawing logic
+canvas.addEventListener("mousedown", (e) => {
+  if (draw) {
+    return;
+  }
+  e.preventDefault();
+  startStroke([e.clientX, e.clientY]);
+});
+canvas.addEventListener("mouseup", (e) => (draw = false));
+canvas.addEventListener("mousemove", function (e) {
   if (prevX == null || prevY == null || !draw) {
     prevX = e.clientX;
     prevY = e.clientY;
@@ -139,22 +154,29 @@ window.addEventListener("mousemove", function (e) {
   let mouseX = e.clientX;
   let mouseY = e.clientY;
 
+  // checking whether we have selected eraser or not
   if (paint_erase == "erase") {
     ctx.strokeStyle = "white";
   } else {
     ctx.strokeStyle = strokeStyle;
   }
-  ctx.lineWidth = lineWidth;
-  ctx.beginPath();
-  ctx.moveTo(prevX, prevY);
-  ctx.lineTo(mouseX, mouseY);
-  ctx.stroke();
+
+  if (toolName !== "brush") {
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(prevX, prevY);
+    ctx.lineTo(mouseX, mouseY);
+    ctx.stroke();
+  } else {
+    continueStroke([mouseX, mouseY]);
+  }
 
   prevX = e.clientX;
   prevY = e.clientY;
 });
 
-// selecting buttons
+
+// selecting tool buttons
 let buttonsContainer = document.querySelector(".buttons");
 let pencilBtn = document.querySelector("#pencil-btn");
 let crayonBtn = document.querySelector("#crayon-btn");
@@ -234,6 +256,7 @@ eraserBtn.addEventListener("click", () => {
 
   if (paint_erase == "paint") {
     paint_erase = "erase";
+    toolName = "eraser";
     // changing the cursor icon to an eraser
     canvas.style.cursor = "url('./assets/eraser.png') 5 5, auto";
   } else {
@@ -243,7 +266,62 @@ eraserBtn.addEventListener("click", () => {
   }
 });
 
+
+
 // functions
+
+function strokeBristle(origin, destination, width) {
+  ctx.beginPath();
+  ctx.moveTo(origin[0], origin[1]);
+  ctx.strokeStyle = strokeStyle;
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.lineTo(destination[0], destination[1]);
+  ctx.stroke();
+}
+
+function drawStroke(bristles, origin, destination) {
+  bristles.forEach((bristle) => {
+    ctx.beginPath();
+    const bristleOrigin = origin[0] - lineWidth / 2 + bristle.distance;
+
+    const bristleDestination =
+      destination[0] - lineWidth / 2 + bristle.distance;
+    strokeBristle(
+      [bristleOrigin, origin[1]],
+      [bristleDestination, destination[1]],
+      bristle.thickness
+    );
+  });
+}
+
+function continueStroke(newPoint) {
+  drawStroke(currentBrush, latestPoint, newPoint);
+  latestPoint = newPoint;
+}
+
+function startStroke(point) {
+  currentBrush = makeBrush(lineWidth);
+  draw = true;
+  latestPoint = point;
+}
+
+function makeBrush(size) {
+  const brush = [];
+  lineWidth = size;
+  let bristleCount = Math.round(size / 3);
+  const gap = lineWidth / bristleCount;
+  for (let i = 0; i < bristleCount; i++) {
+    const distance =
+      i === 0 ? 0 : gap * i + (Math.random() * gap) / 2 - gap / 2;
+    brush.push({
+      distance,
+      thickness: Math.random() * 2 + 2,
+    });
+  }
+  return brush;
+}
 
 function resetCSS(name) {
   // showing crayons and hiding other tools
