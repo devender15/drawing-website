@@ -36,7 +36,9 @@ pencils.forEach((clr) => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.lineWidth = 2;
-    strokeStyle = clr.dataset.color;
+
+    // checking if the pencil selected is a rainbow pencil
+    checkRainbow(clr);
 
     selected.push(clr);
     if (selected.includes(clr)) {
@@ -55,7 +57,9 @@ crayons.forEach((clr) => {
   clr.addEventListener("click", () => {
     ctx.lineJoin = "round";
     ctx.lineWidth = 5;
-    strokeStyle = clr.dataset.color;
+
+    // checking if the crayon selected is a rainbow crayon
+    checkRainbow(clr);
 
     selected.push(clr);
     if (selected.includes(clr)) {
@@ -75,7 +79,9 @@ brushs.forEach((clr) => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.lineWidth = 25;
-    strokeStyle = clr.dataset.color;
+
+    // checking if the brush selected is a rainbow brush
+    checkRainbow(clr);
 
     brushSelected.push(clr);
     if (brushSelected.includes(clr)) {
@@ -279,5 +285,18 @@ function resetCSS(name) {
     paintContainer.style.marginRight = "8rem";
     paintContainer.style.height = styles.height;
     paintContainer.style.animation = styles.animation;
+  }
+}
+
+function checkRainbow(clr) {
+  if (
+    clr.name === "pencil-rainbow.png" ||
+    clr.name === "crayon-rainbow.png" ||
+    clr.name === "-rainbow.png"
+  ) {
+    strokeStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    return;
+  } else {
+    strokeStyle = clr.dataset.color;
   }
 }
