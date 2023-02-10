@@ -1,10 +1,15 @@
 let canvas = document.getElementById("canvas");
-let canvasContainer = document.getElementById("canvaContainer");
+let canvasContainer = document.getElementById("canvasContainer");
 
-canvas.height = 600;
-canvas.width = 600;
+canvas.height = 700;
+canvas.width = 1200;
+
 let ctx = canvas.getContext("2d");
 ctx.lineWidth = 2;
+
+// fill the bg white
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 let prevX = null;
 let prevY = null;
@@ -57,6 +62,9 @@ brushs.forEach((clr) => {
 let clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // fill the bg white
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
 
 let saveBtn = document.querySelector(".save");
@@ -156,14 +164,20 @@ paintBtn.addEventListener("click", () => {
 eraserBtn.addEventListener("click", () => {
   eraserBtn.classList.toggle("color-btn");
 
+  // removing selection from other buttons
+  pencilBtn.classList.remove("color-btn");
+  crayonBtn.classList.remove("color-btn");
+  paintBtn.classList.remove("color-btn");
+
   if (paint_erase == "paint") {
     paint_erase = "erase";
+    // changing the cursor icon to an eraser
+    canvas.style.cursor = "url(./assets/eraser.png), auto";
   } else {
     paint_erase = "paint";
+    // changing the cursor to default
+    canvas.style.cursor = "default";
   }
-
-  // changing the cursor icon to an eraser
-  canvas.style.cursor = "url(./assets/eraser.png), auto";
 });
 
 function resetCSS(name) {

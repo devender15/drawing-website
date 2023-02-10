@@ -9,7 +9,6 @@ body {
 
 .main-container {
   background-color: #ddfcfe;
-  /* padding-top: 1rem; */
   padding-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 0;
@@ -20,7 +19,7 @@ body {
 
 .side-container {
   background-color: #fff;
-  padding: 2rem;
+  /* padding: 2rem; */
   width: 50px;
   flex-basis: 80%;
 }
@@ -28,25 +27,22 @@ body {
 #canvasContainer {
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 }
 
-/* #canvas {
-  width: 100%;
-  height: 100%;
-} */
-
 .nav {
-  width: 100%;
+  width: fit-content;
   height: 50px;
-  padding: 4rem 3rem;
+  margin: 6rem 2rem;
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 1rem 2rem;
+  left: 0;
+  opacity: 0.3;
+  transition: opacity 0.3s ease-in;
+}
+
+.nav:hover {
+  opacity: 1;
 }
 
 .nav img {
@@ -64,7 +60,6 @@ body {
 .toolbar {
   width: fit-content;
   height: 100vh;
-  /* padding: 1rem 2rem; */
   flex-basis: 20%;
   display: flex;
   flex-direction: column;
@@ -101,10 +96,6 @@ body {
   flex-wrap: wrap;
   height: 100%;
 }
-
-/* .original {
-    transform: translateX(-20px);
-} */
 
 .toolbar .colors .pencils .pencil-color,
 .toolbar .colors .crayons img {
