@@ -38,7 +38,6 @@ let currentBrush = makeBrush(lineWidth);
 let selected = [];
 let brushSelected = [];
 
-
 // handling click on the tool color button
 pencils.forEach((clr) => {
   clr.addEventListener("click", () => {
@@ -58,7 +57,7 @@ pencils.forEach((clr) => {
     clr.classList.add("move-tool");
 
     // changing the cursor style
-    canvas.style.cursor = `url(./assets/pencils/${clr.name}), auto`;
+    canvas.style.cursor = "crosshair";
   });
 });
 
@@ -79,7 +78,7 @@ crayons.forEach((clr) => {
     clr.classList.add("move-tool");
 
     // changing the cursor style
-    canvas.style.cursor = `url(./assets/crayons/${clr.name}), auto`;
+    canvas.style.cursor = "crosshair";
   });
 });
 
@@ -102,10 +101,9 @@ brushs.forEach((clr) => {
     clr.classList.add("brush-move");
 
     // changing the cursor style
-    canvas.style.cursor = `url(./assets/brush/${clr.name}), auto`;
+    canvas.style.cursor = "crosshair";
   });
 });
-
 
 // nav buttons
 let homeBtn = document.querySelector(".home");
@@ -133,7 +131,6 @@ saveBtn.addEventListener("click", () => {
 slider.addEventListener("input", () => {
   lineWidth = slider.value;
 });
-
 
 // main drawing logic
 canvas.addEventListener("mousedown", (e) => {
@@ -175,7 +172,6 @@ canvas.addEventListener("mousemove", function (e) {
   prevY = e.clientY;
 });
 
-
 // selecting tool buttons
 let buttonsContainer = document.querySelector(".buttons");
 let pencilBtn = document.querySelector("#pencil-btn");
@@ -196,6 +192,8 @@ let styles = {
 
 window.onload = () => {
   pencilBtn.classList.toggle("color-btn");
+
+  canvas.style.cursor = "crosshair";
 
   // changing css for crayons
   resetCSS("pencil");
@@ -262,11 +260,9 @@ eraserBtn.addEventListener("click", () => {
   } else {
     eraserBtn.classList.remove("color-btn");
     paint_erase = "paint";
-    canvas.style.cursor = "default";
+    canvas.style.cursor = "crosshair";
   }
 });
-
-
 
 // functions
 
