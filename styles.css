@@ -97,6 +97,10 @@ body {
   height: 100%;
 }
 
+.toolbar .colors .pencils {
+  animation: animate 0.5s ease-out;
+}
+
 .toolbar .colors .pencils .pencil-color,
 .toolbar .colors .crayons img {
   width: 8rem;
@@ -148,4 +152,14 @@ body {
 .crayons,
 .brush {
   display: none;
+}
+
+
+@keyframes animate {
+  from {
+    transform: translateX(50px);
+  }
+  to {
+    transform: translateX(0);
+  }
 }

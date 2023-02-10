@@ -17,7 +17,7 @@ let prevY = null;
 let draw = false;
 
 let paint_erase = "paint";
-let strokeStyle = "black";
+let strokeStyle = "#ff0000";
 
 let pencils = document.querySelectorAll(".pencil-color");
 let crayons = document.querySelectorAll(".crayon-color");
@@ -47,13 +47,12 @@ pencils.forEach((clr) => {
     clr.classList.add("move-tool");
 
     // changing the cursor style
-    canvas.style.cursor = `url('./assets/pencils/${clr.name}'), auto`;
+    canvas.style.cursor = `url(./assets/pencils/pencil-blue.png), auto`;
   });
 });
 
 crayons.forEach((clr) => {
   clr.addEventListener("click", () => {
-    ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.lineWidth = 5;
     strokeStyle = clr.dataset.color;
@@ -82,7 +81,15 @@ brushs.forEach((clr) => {
       });
     }
     clr.classList.add("brush-move");
+
+    // changing the cursor style
+    canvas.style.cursor = `url(./assets/brush/-red.png), auto`;
   });
+});
+
+let homeBtn = document.querySelector(".home");
+homeBtn.addEventListener("click", () => {
+  window.location.reload();
 });
 
 let clearBtn = document.querySelector(".clear");
@@ -145,6 +152,7 @@ let styles = {
   flexWrap: "wrap",
   margin: "1rem 0",
   height: "100%",
+  animation: "animate 0.5s ease-out",
 };
 
 window.onload = () => {
@@ -160,6 +168,10 @@ pencilBtn.addEventListener("click", () => {
   // removing selection from other buttons
   crayonBtn.classList.remove("color-btn");
   paintBtn.classList.remove("color-btn");
+  eraserBtn.classList.remove("color-btn");
+
+  paint_erase = "paint";
+  canvas.style.cursor = "default";
 
   // changing css for pencils
   resetCSS("pencil");
@@ -171,6 +183,10 @@ crayonBtn.addEventListener("click", () => {
   // removing selection from other buttons
   pencilBtn.classList.remove("color-btn");
   paintBtn.classList.remove("color-btn");
+  eraserBtn.classList.remove("color-btn");
+
+  paint_erase = "paint";
+  canvas.style.cursor = "default";
 
   // changing css for crayons
   resetCSS("crayon");
@@ -182,6 +198,10 @@ paintBtn.addEventListener("click", () => {
   // removing selection from other buttons
   pencilBtn.classList.remove("color-btn");
   crayonBtn.classList.remove("color-btn");
+  eraserBtn.classList.remove("color-btn");
+
+  paint_erase = "paint";
+  canvas.style.cursor = "default";
 
   // changing css for paint brush
   resetCSS("paint");
@@ -198,10 +218,10 @@ eraserBtn.addEventListener("click", () => {
   if (paint_erase == "paint") {
     paint_erase = "erase";
     // changing the cursor icon to an eraser
-    canvas.style.cursor = "url(./assets/eraser.png), auto";
+    canvas.style.cursor = "url('./assets/eraser.png') 5 5, auto";
   } else {
+    eraserBtn.classList.remove("color-btn");
     paint_erase = "paint";
-    // changing the cursor to default
     canvas.style.cursor = "default";
   }
 });
@@ -225,6 +245,7 @@ function resetCSS(name) {
     crayonContainer.style.flexWrap = styles.flexWrap;
     crayonContainer.style.margin = styles.margin;
     crayonContainer.style.height = styles.height;
+    crayonContainer.style.animation = styles.animation;
   } else if (name === "pencil") {
     // hiding other tools
     crayonContainer.style.display = "none";
@@ -238,6 +259,7 @@ function resetCSS(name) {
     pencilContainer.style.flexWrap = styles.flexWrap;
     pencilContainer.style.margin = styles.margin;
     pencilContainer.style.height = styles.height;
+    pencilContainer.style.animation = styles.animation;
   } else if (name === "paint") {
     // hiding other tools
     crayonContainer.style.display = "none";
@@ -253,5 +275,6 @@ function resetCSS(name) {
     paintContainer.style.marginBottom = "1rem";
     paintContainer.style.marginRight = "8rem";
     paintContainer.style.height = styles.height;
+    paintContainer.style.animation = styles.animation;
   }
 }
