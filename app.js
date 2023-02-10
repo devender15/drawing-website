@@ -11,6 +11,9 @@ let prevY = null;
 
 let draw = false;
 
+let paint_erase = "paint";
+let strokeStyle = "black";
+
 let pencils = document.querySelectorAll(".pencil-color");
 let crayons = document.querySelectorAll(".crayon-color");
 let brushs = document.querySelectorAll(".paint-brush");
@@ -24,7 +27,7 @@ pencils.forEach((clr) => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.lineWidth = 2;
-    ctx.strokeStyle = clr.dataset.color;
+    strokeStyle = clr.dataset.color;
 
     // clr.style.transform = window.getComputedStyle(clr).getPropertyValue("transform");
 
@@ -38,7 +41,7 @@ crayons.forEach((clr) => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.lineWidth = 5;
-    ctx.strokeStyle = clr.dataset.color;
+    strokeStyle = clr.dataset.color;
   });
 });
 
@@ -47,7 +50,7 @@ brushs.forEach((clr) => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.lineWidth = 25;
-    ctx.strokeStyle = clr.dataset.color;
+    strokeStyle = clr.dataset.color;
   });
 });
 
@@ -77,6 +80,13 @@ window.addEventListener("mousemove", function (e) {
 
   let mouseX = e.clientX;
   let mouseY = e.clientY;
+
+  if (paint_erase == "erase") {
+    ctx.strokeStyle = "white";
+  } else {
+    ctx.strokeStyle = strokeStyle;
+  }
+
   ctx.beginPath();
   ctx.moveTo(prevX, prevY);
   ctx.lineTo(mouseX, mouseY);
@@ -104,76 +114,43 @@ let styles = {
 };
 
 window.onload = () => {
-  let colorBtn = document.createElement("div");
-  colorBtn.classList.add("color-btn");
-
-  let btnBg = document.createElement("div");
-  btnBg.classList.add("btn-bg");
-
-  btnBg.innerHTML = `<img src="./assets/tools/pencil.png" id="pencil-btn" alt="pencil">`;
-  colorBtn.appendChild(btnBg);
-  buttonsContainer.replaceChild(colorBtn, pencilBtn);
+  pencilBtn.classList.toggle("color-btn");
 
   // changing css for crayons
   resetCSS("pencil");
 };
 
 pencilBtn.addEventListener("click", () => {
-  let colorBtn = document.createElement("div");
-  colorBtn.classList.add("color-btn");
-
-  let btnBg = document.createElement("div");
-  btnBg.classList.add("btn-bg");
-
-  btnBg.innerHTML = `<img src="./assets/tools/pencil.png" id="pencil-btn" alt="pencil">`;
-  colorBtn.appendChild(btnBg);
-  buttonsContainer.replaceChild(colorBtn, pencilBtn);
+  pencilBtn.classList.toggle("color-btn");
 
   // changing css for pencils
   resetCSS("pencil");
 });
 
 crayonBtn.addEventListener("click", () => {
-  let colorBtn = document.createElement("div");
-  colorBtn.classList.add("color-btn");
-
-  let btnBg = document.createElement("div");
-  btnBg.classList.add("btn-bg");
-
-  btnBg.innerHTML = `<img src="./assets/tools/button-crayon.png" id="crayon-btn" alt="crayon">`;
-  colorBtn.appendChild(btnBg);
-  buttonsContainer.replaceChild(colorBtn, crayonBtn);
+  crayonBtn.classList.toggle("color-btn");
 
   // changing css for crayons
   resetCSS("crayon");
 });
 
 paintBtn.addEventListener("click", () => {
-  let colorBtn = document.createElement("div");
-  colorBtn.classList.add("color-btn");
-
-  let btnBg = document.createElement("div");
-  btnBg.classList.add("btn-bg");
-
-  btnBg.innerHTML = `<img src="./assets/tools/button-paint.png" id="paint-btn" alt="paint">`;
-  colorBtn.appendChild(btnBg);
-  buttonsContainer.replaceChild(colorBtn, paintBtn);
+  paintBtn.classList.toggle("color-btn");
 
   // changing css for paint brush
   resetCSS("paint");
 });
 
 eraserBtn.addEventListener("click", () => {
-  let colorBtn = document.createElement("div");
-  colorBtn.classList.add("color-btn");
+  eraserBtn.classList.toggle("color-btn");
 
-  let btnBg = document.createElement("div");
-  btnBg.classList.add("btn-bg");
+  if (paint_erase == "paint") {
+    paint_erase = "erase";
+  } else {
+    paint_erase = "paint";
+  }
 
-  btnBg.innerHTML = `<img src="./assets/tools/button-eraser.png" id="eraser-btn" alt="eraser">`;
-  colorBtn.appendChild(btnBg);
-  buttonsContainer.replaceChild(colorBtn, eraserBtn);
-
+  // changing the cursor icon to an eraser
   canvas.style.cursor = "url(./assets/eraser.png), auto";
 });
 
