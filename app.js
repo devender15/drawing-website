@@ -47,7 +47,7 @@ pencils.forEach((clr) => {
     clr.classList.add("move-tool");
 
     // changing the cursor style
-    canvas.style.cursor = `url(./assets/pencils/pencil-blue.png), auto`;
+    canvas.style.cursor = `url(./assets/pencils/${clr.name}), auto`;
   });
 });
 
@@ -64,6 +64,9 @@ crayons.forEach((clr) => {
       });
     }
     clr.classList.add("move-tool");
+
+    // changing the cursor style
+    canvas.style.cursor = `url(./assets/crayons/${clr.name}), auto`;
   });
 });
 
@@ -83,7 +86,7 @@ brushs.forEach((clr) => {
     clr.classList.add("brush-move");
 
     // changing the cursor style
-    canvas.style.cursor = `url(./assets/brush/-red.png), auto`;
+    canvas.style.cursor = `url(./assets/brush/${clr.name}), auto`;
   });
 });
 
