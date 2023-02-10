@@ -127,6 +127,14 @@ body {
   transform: translateX(-20px);
 }
 
+.brush-move {
+  transform: scale(1.1);
+}
+
+.move-tool {
+  transform: translateX(-20px);
+}
+
 .color-btn {
   width: 100%;
   padding: 0.4rem 1rem;

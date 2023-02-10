@@ -27,6 +27,10 @@ pencils = Array.from(pencils);
 crayons = Array.from(crayons);
 brushs = Array.from(brushs);
 
+// this will store the selected tool and whenever we select other tool then this tool will move to its original place
+let selected = [];
+let brushSelected = [];
+
 pencils.forEach((clr) => {
   clr.addEventListener("click", () => {
     ctx.lineCap = "round";
@@ -34,7 +38,13 @@ pencils.forEach((clr) => {
     ctx.lineWidth = 2;
     strokeStyle = clr.dataset.color;
 
-    // clr.style.transform = window.getComputedStyle(clr).getPropertyValue("transform");
+    selected.push(clr);
+    if (selected.includes(clr)) {
+      selected.forEach((clr) => {
+        clr.classList.remove("move-tool");
+      });
+    }
+    clr.classList.add("move-tool");
 
     // changing the cursor style
     canvas.style.cursor = `url('./assets/pencils/${clr.name}'), auto`;
@@ -47,6 +57,14 @@ crayons.forEach((clr) => {
     ctx.lineJoin = "round";
     ctx.lineWidth = 5;
     strokeStyle = clr.dataset.color;
+
+    selected.push(clr);
+    if (selected.includes(clr)) {
+      selected.forEach((clr) => {
+        clr.classList.remove("move-tool");
+      });
+    }
+    clr.classList.add("move-tool");
   });
 });
 
@@ -56,6 +74,14 @@ brushs.forEach((clr) => {
     ctx.lineJoin = "round";
     ctx.lineWidth = 25;
     strokeStyle = clr.dataset.color;
+
+    brushSelected.push(clr);
+    if (brushSelected.includes(clr)) {
+      brushSelected.forEach((clr) => {
+        clr.classList.remove("brush-move");
+      });
+    }
+    clr.classList.add("brush-move");
   });
 });
 
