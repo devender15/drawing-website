@@ -163,7 +163,7 @@ canvas.addEventListener("mousemove", function (e) {
     ctx.strokeStyle = strokeStyle;
   }
 
-  if (isRainbow) {
+  if (isRainbow && paint_erase !== "erase") {
     addPoint(parseInt(e.clientX - offsetX), parseInt(e.clientY - offsetY));
   } else {
     if (toolName !== "brush") {
