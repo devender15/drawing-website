@@ -1,6 +1,5 @@
 let canvas = document.getElementById("canvas");
 let canvasContainer = document.getElementById("canvasContainer");
-const slider = document.querySelector("#slide");
 
 canvas.height = 700;
 canvas.width = 1200;
@@ -8,7 +7,7 @@ canvas.width = 1200;
 let toolName = "pencil";
 
 let ctx = canvas.getContext("2d");
-lineWidth = slider.value;
+lineWidth = 2
 
 // fill the bg white
 ctx.fillStyle = "white";
@@ -42,6 +41,7 @@ let brushSelected = [];
 pencils.forEach((clr) => {
   clr.addEventListener("click", () => {
     toolName = "pencil";
+    lineWidth = 2;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
@@ -63,6 +63,7 @@ pencils.forEach((clr) => {
 
 crayons.forEach((clr) => {
   clr.addEventListener("click", () => {
+    lineWidth = 10;
     toolName = "crayon";
     ctx.lineJoin = "round";
 
@@ -85,7 +86,7 @@ crayons.forEach((clr) => {
 brushs.forEach((clr) => {
   clr.addEventListener("click", () => {
     toolName = "brush";
-
+    lineWidth = 20;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
@@ -126,10 +127,6 @@ saveBtn.addEventListener("click", () => {
   a.href = data;
   a.download = "sketch.png";
   a.click();
-});
-
-slider.addEventListener("input", () => {
-  lineWidth = slider.value;
 });
 
 // main drawing logic
@@ -255,6 +252,7 @@ eraserBtn.addEventListener("click", () => {
   if (paint_erase == "paint") {
     paint_erase = "erase";
     toolName = "eraser";
+    lineWidth = 20;
     // changing the cursor icon to an eraser
     canvas.style.cursor = "url('./assets/eraser.png') 5 5, auto";
   } else {
