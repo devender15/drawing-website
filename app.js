@@ -1,13 +1,13 @@
 let canvas = document.getElementById("canvas");
 let canvasContainer = document.getElementById("canvasContainer");
 
-canvas.height = 700;
+canvas.height = 650;
 canvas.width = 1200;
 
 let toolName = "pencil";
 
 let ctx = canvas.getContext("2d");
-lineWidth = 2
+lineWidth = 2;
 
 // fill the bg white
 ctx.fillStyle = "white";
@@ -15,6 +15,8 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 let prevX = null;
 let prevY = null;
+let PI = Math.PI;
+let isRainbow = false;
 
 // drawing state
 let latestPoint;
@@ -189,7 +191,7 @@ let styles = {
 
 window.onload = () => {
   pencilBtn.classList.toggle("color-btn");
-
+  pencilBtn.classList.add("selected");
   canvas.style.cursor = "crosshair";
 
   // changing css for crayons
@@ -199,10 +201,16 @@ window.onload = () => {
 pencilBtn.addEventListener("click", () => {
   pencilBtn.classList.toggle("color-btn");
 
+  pencilBtn.classList.toggle("selected");
+
   // removing selection from other buttons
   crayonBtn.classList.remove("color-btn");
   paintBtn.classList.remove("color-btn");
   eraserBtn.classList.remove("color-btn");
+  // removing selected class
+  eraserBtn.classList.remove("selected");
+  crayonBtn.classList.remove("selected");
+  paintBtn.classList.remove("selected");
 
   paint_erase = "paint";
   canvas.style.cursor = "default";
@@ -214,10 +222,16 @@ pencilBtn.addEventListener("click", () => {
 crayonBtn.addEventListener("click", () => {
   crayonBtn.classList.toggle("color-btn");
 
+  crayonBtn.classList.toggle("selected");
+
   // removing selection from other buttons
   pencilBtn.classList.remove("color-btn");
   paintBtn.classList.remove("color-btn");
   eraserBtn.classList.remove("color-btn");
+  // removing selected class
+  paintBtn.classList.remove("selected");
+  eraserBtn.classList.remove("selected");
+  pencilBtn.classList.remove("selected");
 
   paint_erase = "paint";
   canvas.style.cursor = "default";
@@ -229,10 +243,16 @@ crayonBtn.addEventListener("click", () => {
 paintBtn.addEventListener("click", () => {
   paintBtn.classList.toggle("color-btn");
 
+  paintBtn.classList.toggle("selected");
+
   // removing selection from other buttons
   pencilBtn.classList.remove("color-btn");
   crayonBtn.classList.remove("color-btn");
   eraserBtn.classList.remove("color-btn");
+  // removing selected class
+  pencilBtn.classList.remove("selected");
+  crayonBtn.classList.remove("selected");
+  eraserBtn.classList.remove("selected");
 
   paint_erase = "paint";
   canvas.style.cursor = "default";
@@ -244,10 +264,16 @@ paintBtn.addEventListener("click", () => {
 eraserBtn.addEventListener("click", () => {
   eraserBtn.classList.toggle("color-btn");
 
+  eraserBtn.classList.toggle("selected");
+
   // removing selection from other buttons
   pencilBtn.classList.remove("color-btn");
   crayonBtn.classList.remove("color-btn");
   paintBtn.classList.remove("color-btn");
+  // removing selected class
+  pencilBtn.classList.remove("selected");
+  crayonBtn.classList.remove("selected");
+  paintBtn.classList.remove("selected");
 
   if (paint_erase == "paint") {
     paint_erase = "erase";
