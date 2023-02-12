@@ -17,6 +17,10 @@ let prevX = null;
 let prevY = null;
 let PI = Math.PI;
 let isRainbow = false;
+let lastPointX, lastPointY;
+let offsetX = canvas.offsetLeft;
+let offsetY = canvas.offsetTop;
+let steps = 50;
 
 // drawing state
 let latestPoint;
@@ -137,6 +141,8 @@ canvas.addEventListener("mousedown", (e) => {
     return;
   }
   e.preventDefault();
+  lastPointX = parseInt(e.clientX - offsetX);
+  lastPointY = parseInt(e.clientY - offsetY);
   startStroke([e.clientX, e.clientY]);
 });
 canvas.addEventListener("mouseup", (e) => (draw = false));
@@ -157,14 +163,18 @@ canvas.addEventListener("mousemove", function (e) {
     ctx.strokeStyle = strokeStyle;
   }
 
-  if (toolName !== "brush") {
-    ctx.lineWidth = lineWidth;
-    ctx.beginPath();
-    ctx.moveTo(prevX, prevY);
-    ctx.lineTo(mouseX, mouseY);
-    ctx.stroke();
+  if (isRainbow) {
+    addPoint(parseInt(e.clientX - offsetX), parseInt(e.clientY - offsetY));
   } else {
-    continueStroke([mouseX, mouseY]);
+    if (toolName !== "brush") {
+      ctx.lineWidth = lineWidth;
+      ctx.beginPath();
+      ctx.moveTo(prevX, prevY);
+      ctx.lineTo(mouseX, mouseY);
+      ctx.stroke();
+    } else {
+      continueStroke([mouseX, mouseY]);
+    }
   }
 
   prevX = e.clientX;
@@ -402,9 +412,43 @@ function checkRainbow(clr) {
     clr.name === "crayon-rainbow.png" ||
     clr.name === "-rainbow.png"
   ) {
-    strokeStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    isRainbow = true;
     return;
   } else {
     strokeStyle = clr.dataset.color;
   }
+}
+
+function addPoint(x, y) {
+  var dx = x - lastPointX;
+  var dy = y - lastPointY;
+  var angle = Math.atan2(dy, dx) - PI / 2;
+  ctx.strokeStyle = calcGradient(x, y, angle);
+  ctx.lineWidth = lineWidth;
+  ctx.beginPath();
+  ctx.moveTo(lastPointX, lastPointY);
+  for (var i = -8; i < steps; i++) {
+    var xx = lastPointX + (dx * i) / (steps - 1);
+    var yy = lastPointY + (dy * i) / (steps - 1);
+    ctx.lineTo(xx, yy);
+  }
+  ctx.stroke();
+  lastPointX = x;
+  lastPointY = y;
+}
+
+function calcGradient(x, y, angle) {
+  var offX1 = x + (lineWidth / 2.25) * Math.cos(angle);
+  var offY1 = y + (lineWidth / 2.25) * Math.sin(angle);
+  var offX2 = x + (lineWidth / 2.25) * Math.cos(angle - PI);
+  var offY2 = y + (lineWidth / 2.25) * Math.sin(angle - PI);
+  var gradient = ctx.createLinearGradient(offX1, offY1, offX2, offY2);
+  gradient.addColorStop(0.0, "red");
+  gradient.addColorStop(1 / 6, "orange");
+  gradient.addColorStop(2 / 6, "yellow");
+  gradient.addColorStop(3 / 6, "green");
+  gradient.addColorStop(4 / 6, "aqua");
+  gradient.addColorStop(5 / 6, "blue");
+  gradient.addColorStop(1.0, "purple");
+  return gradient;
 }
