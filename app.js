@@ -1,3 +1,8 @@
+// setting width and height of page to 1920 x 1080
+window.onload = function () {
+  this.resizeTo(1920, 1080);
+}
+
 let canvas = document.getElementById("canvas");
 let canvasContainer = document.getElementById("canvasContainer");
 
@@ -416,6 +421,8 @@ function checkRainbow(clr) {
     return;
   } else {
     strokeStyle = clr.dataset.color;
+    // disabling the rainbow pencil
+    isRainbow = false;
   }
 }
 
