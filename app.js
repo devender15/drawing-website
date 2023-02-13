@@ -1,7 +1,7 @@
 // setting width and height of page to 1920 x 1080
 window.onload = function () {
   this.resizeTo(1920, 1080);
-}
+};
 
 let canvas = document.getElementById("canvas");
 let canvasContainer = document.getElementById("canvasContainer");
@@ -56,6 +56,11 @@ pencils.forEach((clr) => {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
+    // removing selection from eraser button
+    eraserBtn.classList.remove("color-btn");
+    eraserBtn.classList.remove("selected");
+    paint_erase = "paint";
+
     // checking if the pencil selected is a rainbow pencil
     checkRainbow(clr);
 
@@ -77,6 +82,11 @@ crayons.forEach((clr) => {
     lineWidth = 10;
     toolName = "crayon";
     ctx.lineJoin = "round";
+
+    // removing selection from eraser button
+    eraserBtn.classList.remove("color-btn");
+    eraserBtn.classList.remove("selected");
+    paint_erase = "paint";
 
     // checking if the crayon selected is a rainbow crayon
     checkRainbow(clr);
@@ -100,6 +110,11 @@ brushs.forEach((clr) => {
     lineWidth = 20;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
+
+    // removing selection from eraser button
+    eraserBtn.classList.remove("color-btn");
+    eraserBtn.classList.remove("selected");
+    paint_erase = "paint";
 
     // checking if the brush selected is a rainbow brush
     checkRainbow(clr);
