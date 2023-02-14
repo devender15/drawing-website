@@ -6,18 +6,16 @@ window.onload = function () {
 let canvas = document.getElementById("canvas");
 let canvasContainer = document.getElementById("canvasContainer");
 
+let ctx = canvas.getContext("2d");
+
+// canvas dimensions
 canvas.height = 650;
 canvas.width = 1200;
-
-let toolName = "pencil";
-
-let ctx = canvas.getContext("2d");
 lineWidth = 2;
 
-// fill the bg white
-ctx.fillStyle = "white";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+// important variables
+let backgroundImage = "bg.jpg";
+let toolName = "pencil";
 let prevX = null;
 let prevY = null;
 let PI = Math.PI;
@@ -26,14 +24,18 @@ let lastPointX, lastPointY;
 let offsetX = canvas.offsetLeft;
 let offsetY = canvas.offsetTop;
 let steps = 50;
+let paint_erase = "paint";
+let strokeStyle = ""; // this will store the color
 
 // drawing state
 let latestPoint;
 let draw = false;
 
-let paint_erase = "paint";
-let strokeStyle = ""; // this will store the color
+// setting up the drawing area as an image
+setCanvasBackground();
 
+
+// main code
 let pencils = document.querySelectorAll(".pencil-color");
 let crayons = document.querySelectorAll(".crayon-color");
 let brushs = document.querySelectorAll(".paint-brush");
@@ -142,8 +144,7 @@ let clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // fill the bg white
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  setCanvasBackground();
 });
 
 let saveBtn = document.querySelector(".save");
@@ -473,4 +474,12 @@ function calcGradient(x, y, angle) {
   gradient.addColorStop(5 / 6, "blue");
   gradient.addColorStop(1.0, "purple");
   return gradient;
+}
+
+function setCanvasBackground() {
+  const bgImage = new Image();
+  bgImage.src = `assets/${backgroundImage}`;
+  bgImage.onload = () => {
+    ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+  };
 }
