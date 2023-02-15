@@ -174,8 +174,8 @@ canvas.addEventListener("mousemove", function (e) {
     return;
   }
 
-  let mouseX = e.clientX;
-  let mouseY = e.clientY;
+  let mouseX = e.clientX - this.offsetLeft;
+  let mouseY = e.clientY - this.offsetTop;
 
   // checking whether we have selected eraser or not
   if (paint_erase == "erase") {
@@ -198,8 +198,8 @@ canvas.addEventListener("mousemove", function (e) {
     }
   }
 
-  prevX = e.clientX;
-  prevY = e.clientY;
+  prevX = e.clientX - this.offsetLeft;
+  prevY = e.clientY - this.offsetTop;
 });
 
 // selecting tool buttons
