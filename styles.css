@@ -28,7 +28,7 @@ img {
 
 .side-container {
   background-color: #fff;
-  /* padding: 2rem; */
+  padding: 2rem;
   width: 50px;
   flex-basis: 85%;
 }

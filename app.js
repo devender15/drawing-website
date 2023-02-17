@@ -14,7 +14,7 @@ canvas.width = 1200;
 lineWidth = 2;
 
 // important variables
-let backgroundImage = "bg.jpg";
+let backgroundImage = "bg.png";
 let toolName = "pencil";
 let prevX = null;
 let prevY = null;
@@ -33,7 +33,6 @@ let draw = false;
 
 // setting up the drawing area as an image
 setCanvasBackground();
-
 
 // main code
 let pencils = document.querySelectorAll(".pencil-color");
@@ -177,9 +176,25 @@ canvas.addEventListener("mousemove", function (e) {
   let mouseX = e.clientX - this.offsetLeft;
   let mouseY = e.clientY - this.offsetTop;
 
+  // checking if the mouse is over bg image
+  // detectImage(e);
+
+  // Get the color value of the pixel at the mouse's current position
+  let pixelData = ctx.getImageData(
+    e.clientX - canvas.offsetLeft,
+    e.clientY - canvas.offsetTop,
+    1,
+    1
+  ).data;
+
+  if (pixelData[3] > 0) {
+    // strokeStyle = "rgba(0, 0, 0, 0)";
+    console.log("mouse is over  image");
+  }
+
   // checking whether we have selected eraser or not
   if (paint_erase == "erase") {
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = pixelData[3] > 0 ? "rgba(0, 0, 0, 0)" : "white";
   } else {
     ctx.strokeStyle = strokeStyle;
   }
@@ -482,4 +497,8 @@ function setCanvasBackground() {
   bgImage.onload = () => {
     ctx.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
   };
+}
+
+function detectImage(e) {
+
 }
